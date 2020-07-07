@@ -3,3 +3,10 @@
 .characters-card {
   background-color: #D9C2A7;  
 }
+
+.character-name {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  text-shadow: 1px 0 2px #000, 0 -1px 2px #000, 0 1px 2px #000, -1px 0 2px #000;
+}

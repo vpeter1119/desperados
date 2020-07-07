@@ -21,7 +21,7 @@
             <div class="card-panel character-sheet-subsection" fxFlex="45%" fxFlex.lt-md="100%">
               <h6 class="card-title character-sheet-subsection-title">Physical</h6>
               <div class="card-content">
-                <table>
+                <table fxShow fxHide.lt-md>
                   <tr>
                     <td>Brawn</td>
                     <td>
@@ -104,12 +104,26 @@
                     </td>
                   </tr>
                 </table>
+                <table fxHide fxShow.lt-md>
+                  <tr>
+                    <td>Brawn</td>
+                    <td>{{character.attributes.brawn}}</td>
+                  </tr>
+                  <tr>
+                    <td>Agility</td>
+                    <td>{{character.attributes.agility}}</td>
+                  </tr>
+                  <tr>
+                    <td>Mettle</td>
+                    <td>{{character.attributes.mettle}}</td>
+                  </tr>
+                </table>
               </div>
             </div>
             <div class="card-panel character-sheet-subsection" fxFlex="45%" fxFlex.lt-md="100%">
               <h6 class="card-title character-sheet-subsection-title">Mental</h6>
               <div class="card-content">
-                <table>
+                <table fxShow fxHide.lt-md>
                   <tr>
                     <td>Insight</td>
                     <td>
@@ -190,6 +204,20 @@
                       <i class="fas fa-square" *ngIf="character.attributes.resolve>5"></i>
                       <i class="far fa-square" *ngIf="character.attributes.resolve<6"></i>
                     </td>
+                  </tr>
+                </table>
+                <table fxHide fxShow.lt-md>
+                  <tr>
+                    <td>Insight</td>
+                    <td>{{character.attributes.insight}}</td>
+                  </tr>
+                  <tr>
+                    <td>Wits</td>
+                    <td>{{character.attributes.wits}}</td>
+                  </tr>
+                  <tr>
+                    <td>Resolve</td>
+                    <td>{{character.attributes.resolve}}</td>
                   </tr>
                 </table>
               </div>
