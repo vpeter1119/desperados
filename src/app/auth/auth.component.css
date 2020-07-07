@@ -1,0 +1,10 @@
+/* Materialize Classes */
+
+.card {
+    width: 50%;
+}
+
+/* Custom Classes */
+.login-form {
+    margin-top: 20px;
+}
