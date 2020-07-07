@@ -5,7 +5,7 @@
   <div class="card-panel characters-card">
     <h4 class="card-title">My Characters (<span *ngIf="!characters">0</span><span *ngIf="characters">{{characters.length}}</span>)  <a class="waves-effect waves-light btn brown darken-4">Create</a></h4>
     <div *ngIf="!characters">No characters.</div>
-    <div *ngIf="characters" fxLayout="row wrap" fxLayoutGap="10%" fxLayoutGap.lt-md="0">
+    <div *ngIf="characters" fxLayout="row wrap" fxLayoutGap="10px">
       <div fxFlex="45%" fxFlex.lt-md="100%" *ngFor="let character of characters">
         <a href="" routerLink="{{character.index}}">
           <div class="card brown hoverable">
