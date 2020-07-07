@@ -4,6 +4,10 @@
   width: 50%;
 }
 
+.card-title {
+  font-family: 'Libre Baskerville', serif;
+}
+
 /* Custom Classes */
 .login-form {
   margin-top: 20px;

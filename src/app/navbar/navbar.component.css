@@ -3,3 +3,13 @@
 .nav-wrapper {
   padding: 0 50px;
 }
+
+.brand-logo {
+  font-family: 'Libre Baskerville', serif;
+}
+
+.nav-link {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
