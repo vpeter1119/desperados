@@ -11,6 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthInterceptor } from "./auth/auth-interceptor";
+import { CharactersComponent } from './characters/characters.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AuthInterceptor } from "./auth/auth-interceptor";
     AuthComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent
+    NavbarComponent,
+    CharactersComponent
   ],
   imports: [
     BrowserModule,

@@ -49,6 +49,10 @@ export class AuthService {
     return this.currentUserListener.asObservable();
   }
 
+  getCurrentUserRaw() {
+    return this.currentUser;
+  }
+
   createUser(email: string, username: string, password: string) {
     const authData: AuthData = { email: email, username: username, password: password };
     this.http
@@ -85,7 +89,9 @@ export class AuthService {
           const expirationDate = new Date(now.getTime() + expiresInDuration * 3600);
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId);
-          this.router.navigate(["home"]);
+          setTimeout(() => {
+            this.router.navigate(["characters"]);
+          }, 300)
         }
       });
   }

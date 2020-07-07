@@ -4,6 +4,7 @@
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a href="" routerLink="/login" *ngIf="!isAuth">Login</a></li>
       <li><a href="" routerLink="/register" *ngIf="!isAuth">Register</a></li>
+      <li><a href="" routerLink="/characters" *ngIf="isAuth">Characters</a></li>
       <li><a href="" routerLink="" (click)="onLogout()" *ngIf="isAuth">Logout</a></li>
     </ul>
   </div>
