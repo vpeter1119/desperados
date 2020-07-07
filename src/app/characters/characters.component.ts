@@ -12,6 +12,7 @@ import { Character } from './character.model';
 })
 export class CharactersComponent implements OnInit, OnDestroy {
 
+  isLoading: boolean = true;
   currentUser;
   characters: Character[];
   charactersSubs: Subscription;
@@ -22,10 +23,14 @@ export class CharactersComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.currentUser = this.authService.getCurrentUserRaw();
     this.charactersSubs = this.charactersService.GetMyCharactersListener().subscribe((characters: Character[]) => {
       console.warn(characters);
       this.characters = characters;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 300);
     })
   }
 

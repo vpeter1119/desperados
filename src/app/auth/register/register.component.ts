@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 
 import { AuthService } from "../auth.service";
@@ -7,10 +7,15 @@ import { AuthService } from "../auth.service";
   templateUrl: "./register.component.html",
   styleUrls: ["./register.component.css"]
 })
-export class RegisterComponent {
-  isLoading = false;
+export class RegisterComponent implements OnInit {
+
+  isLoading: boolean = false;
 
   constructor(public authService: AuthService) { }
+
+  ngOnInit() {
+    this.isLoading = false;
+  }
 
   onSignup(form: NgForm) {
     if (form.invalid) {
