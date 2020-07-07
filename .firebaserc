@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "desperados-2d7cd": {
+      "hosting": {
+        "desperados": [
+          "desperados-2d7cd"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "desperados-2d7cd"
+  }
+}
