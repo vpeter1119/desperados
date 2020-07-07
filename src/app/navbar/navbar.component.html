@@ -2,8 +2,9 @@
   <div class="nav-wrapper blue-grey">
     <a href="#" class="brand-logo" routerLink="/">Desperados</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="" routerLink="/login">Login</a></li>
-      <li><a href="" routerLink="/register">Register</a></li>
+      <li><a href="" routerLink="/login" *ngIf="!isAuth">Login</a></li>
+      <li><a href="" routerLink="/register" *ngIf="!isAuth">Register</a></li>
+      <li><a href="" routerLink="" (click)="onLogout()" *ngIf="isAuth">Logout</a></li>
     </ul>
   </div>
 </nav>

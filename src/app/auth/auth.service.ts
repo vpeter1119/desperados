@@ -82,7 +82,7 @@ export class AuthService {
           this.adminStatusListener.next(this.isAdmin);
           this.currentUserListener.next(this.currentUser);
           const now = new Date();
-          const expirationDate = new Date(now.getTime() + expiresInDuration * 100000);
+          const expirationDate = new Date(now.getTime() + expiresInDuration * 3600);
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId);
           this.router.navigate(["home"]);

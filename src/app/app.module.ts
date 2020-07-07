@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 import { AuthInterceptor } from "./auth/auth-interceptor";
 
 @NgModule({
@@ -16,6 +17,7 @@ import { AuthInterceptor } from "./auth/auth-interceptor";
     AppComponent,
     AuthComponent,
     LoginComponent,
+    RegisterComponent,
     NavbarComponent
   ],
   imports: [
