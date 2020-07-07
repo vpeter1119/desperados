@@ -17,7 +17,7 @@
         <!-- SECTION: ATTRIBUTES -->
         <div class="card-panel character-sheet-section" fxFlex="100%">
           <h5 class="card-title character-sheet-section-title">Attributes</h5>
-          <div class="card-content" fxLayout="row wrap" fxLayoutGap="10px">
+          <div class="card-content" fxLayout="row wrap" fxLayoutGap="10%" fxLayoutGap.lt-md="0">
             <div class="card-panel character-sheet-subsection" fxFlex="45%" fxFlex.lt-md="100%">
               <h6 class="card-title character-sheet-subsection-title">Physical</h6>
               <div class="card-content">
@@ -227,7 +227,7 @@
         <!-- SECTION: CALCULATED VALUES -->
         <div class="card-panel character-sheet-section" fxFlex="100%">
           <h5 class="card-title character-sheet-section-title"></h5>
-          <div class="card-content" fxLayout="row wrap" fxLayoutGap="10px">
+          <div class="card-content" fxLayout="row wrap" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
             <div class="card-panel character-sheet-subsection" fxFlex="28%" fxFlex.lt-md="100%">
               <span class="calculated-text character-sheet-subsection-title">Hit Points: </span>
               <span class="calculated-value character-sheet-subsection-title">{{CalculateValues(character.attributes).hp}}</span>
@@ -248,15 +248,15 @@
           <div class="card-content" fxLayout="row wrap" fxLayoutGap="10px">
             <table>
               <thead>
-                <tr>
-                  <th>Skill</th>
-                  <th>Description</th>
+                <tr fxLayout="row">
+                  <th fxFlex="30%">Skill</th>
+                  <th fxFlex="70%">Description</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let skill in character.skills">
-                  <td>{{skill.name}}</td>
-                  <td>{{skill.description}}</td>
+                <tr *ngFor="let skill of character.skills" fxLayout="row">
+                  <td fxFlex="30%">{{skill.name}}</td>
+                  <td fxFlex="70%">{{skill.description}}</td>
                 </tr>
               </tbody>
             </table>
@@ -268,15 +268,15 @@
           <div class="card-content" fxLayout="row wrap" fxLayoutGap="10px">
             <table>
               <thead>
-                <tr>
-                  <th>Special Skill</th>
-                  <th>Description</th>
+                <tr fxLayout="row">
+                  <th fxFlex="30%">Special Skill</th>
+                  <th fxFlex="70%">Description</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let skill in character.special">
-                  <td>{{skill.name}}</td>
-                  <td>{{skill.description}}</td>
+                <tr *ngFor="let skill of character.special" fxLayout="row">
+                  <td fxFlex="30%">{{skill.name}}</td>
+                  <td fxFlex="70%">{{skill.desc}}</td>
                 </tr>
               </tbody>
             </table>
@@ -288,15 +288,15 @@
           <div class="card-content" fxLayout="row wrap" fxLayoutGap="10px">
             <table>
               <thead>
-                <tr>
-                  <th>Equipment</th>
-                  <th>Description</th>
+                <tr fxLayout="row">
+                  <th fxFlex="30%">Equipment</th>
+                  <th fxFlex="70%">Description</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item in character.equipment">
-                  <td>{{item.name}}</td>
-                  <td>{{item.description}}</td>
+                <tr *ngFor="let item of character.equipment" fxLayout="row">
+                  <td fxFlex="30%">{{item.name}}</td>
+                  <td fxFlex="70%">{{item.description}}</td>
                 </tr>
               </tbody>
             </table>
