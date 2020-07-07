@@ -6,6 +6,7 @@ import { AuthGuard } from "./auth/auth.guard";
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { CharactersComponent } from './characters/characters.component';
+import { CharacterViewComponent } from './characters/character-view/character-view.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'characters', redirectTo: '/my-characters', pathMatch: 'full' },
   { path: 'my-characters', component: CharactersComponent, canActivate: [AuthGuard] },
+  { path: 'my-characters/:index', component: CharacterViewComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

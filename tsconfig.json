@@ -6,6 +6,7 @@
 */
 {
   "files": [],
+  "baseUrl": "src",
   "references": [
     {
       "path": "./tsconfig.app.json"

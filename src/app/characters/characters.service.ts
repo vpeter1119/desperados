@@ -13,6 +13,8 @@ export class CharactersService {
   currentUser;
   characters;
   charactersListener = new Subject<Character[]>();
+  requestedCharacter;
+  requestedCharacterListener = new Subject<Character>();
 
   constructor(
     private http: HttpClient,
@@ -37,6 +39,7 @@ export class CharactersService {
         } else {
           // Handle error
           window.alert("Error! Please try again later.");
+          this.authService.logout();
           this.router.navigate(['login']);
         }
       });
@@ -45,6 +48,29 @@ export class CharactersService {
   GetMyCharactersListener() {
     this.GetMyCharacters();
     return this.charactersListener.asObservable();
+  }
+
+  GetOneOfMyCharacters(index) {
+    this.currentUser = this.authService.getCurrentUserRaw();
+    let id = this.currentUser.id;
+    const url = `${this.apiUrl}/users/${id}/characters/${index}`;
+    this.http.get<{ ok: boolean, result: Character[] }>(url)
+      .subscribe(response => {
+        if (response.ok && response.result) {
+          this.requestedCharacter = response.result;
+          this.requestedCharacterListener.next(this.requestedCharacter);          
+        } else {
+          // Handle error
+          window.alert("Error! Please try again later.");
+          this.authService.logout();
+          this.router.navigate(['login']);
+        }
+      });
+  }
+
+  GetOneOfMyCharactersListener(index) {
+    this.GetOneOfMyCharacters(index);
+    return this.requestedCharacterListener.asObservable();
   }
 
 }

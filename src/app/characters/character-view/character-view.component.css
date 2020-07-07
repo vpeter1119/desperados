@@ -1,0 +1,44 @@
+/* Materialize Classes */
+
+.character-sheet-title {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  font-size: 2rem;
+  text-shadow: 1px 0 2px #000, 0 -1px 2px #000, 0 1px 2px #000, -1px 0 2px #000;
+}
+
+.card-content {
+  background-color: #D9C2A7;
+  color: #401F14;
+}
+
+/* Custom Classes */
+
+.character-sheet-cover {
+  height: 200px;
+  object-fit: cover;
+}
+
+.character-sheet-section {
+  background-color: #D9C2A7;
+  color: #401F14;
+}
+
+.character-sheet-section-title {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.character-sheet-subsection {
+  background-color: #D9C2A7;
+  color: #401F14;
+}
+
+.character-sheet-subsection-title {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  text-align: center;
+}
