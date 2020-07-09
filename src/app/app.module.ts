@@ -15,6 +15,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AuthInterceptor } from "./auth/auth-interceptor";
 import { CharactersComponent } from './characters/characters.component';
 import { CharacterViewComponent } from './characters/character-view/character-view.component';
+import { CharacterCreateComponent } from './characters/character-create/character-create.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CharacterViewComponent } from './characters/character-view/character-vi
     NavbarComponent,
     CharactersComponent,
     CharacterViewComponent,
+    CharacterCreateComponent,
   ],
   imports: [
     AppRoutingModule,

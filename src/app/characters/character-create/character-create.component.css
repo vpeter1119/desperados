@@ -1,0 +1,66 @@
+/* Materialize Classes */
+
+.breadcrumb:hover {
+  cursor: pointer;
+}
+
+.card-title {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+.nav-wrapper {
+    padding: 0 15px;
+}
+
+/* Custom Classes */
+
+.characters-card {
+  background-color: #D9C2A7;
+}
+
+.section-title {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  text-shadow: 1px 0 2px #000, 0 -1px 2px #000, 0 1px 2px #000, -1px 0 2px #000;
+}
+
+.template-description {
+  background-color: #D9C2A7;
+}
+
+/* Custom Colors */
+
+/* label color */
+.input-field label {
+  color: #401F14;
+}
+/* label focus color */
+.input-field input:focus + label {
+  color: #401F14;
+}
+/* input value color */
+.input-field input {
+  color: #401F14;
+}
+  /* label underline focus color */
+  .input-field input:focus {
+    border-bottom: 1px solid #401F14;
+    box-shadow: 0 1px 0 0 #401F14;
+  }
+  /* valid color */
+  .input-field input.valid {
+    border-bottom: 1px solid #401F14;
+    box-shadow: 0 1px 0 0 #401F14;
+  }
+  /* invalid color */
+  .input-field input.invalid {
+    border-bottom: 1px solid red;
+    box-shadow: 0 1px 0 0 red;
+  }
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #401F14;
+}

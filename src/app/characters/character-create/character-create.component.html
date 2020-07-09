@@ -1,0 +1,90 @@
+<div *ngIf="isLoading" class="progress">
+  <div class="indeterminate"></div>
+</div>
+<div *ngIf="!isLoading">
+  <div class="card-panel characters-card">
+    <h4 class="card-title">Create Character<span *ngIf="character.name != ''">: {{character.name}}</span></h4>
+    <div class="character-create-navigation">
+      <nav>
+        <div class="nav-wrapper brown darken-2">
+          <div *ngIf="currentStep>0">
+            <a class="breadcrumb" *ngIf="currentStep>0" (click)="SetStep(1)">1. Template</a>
+            <a class="breadcrumb" *ngIf="currentStep>1" (click)="SetStep(2)">2. Attributes</a>
+            <a class="breadcrumb" *ngIf="currentStep>2" (click)="SetStep(3)">3. Skills</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!-- STEP 0: GENERAL -->
+    <div *ngIf="currentStep==0" class="character-create-section card-panel characters-card">
+      <h5 class="card-title">Step 0: Name Your Character!</h5>
+      <div class="card-content">
+        <div class="input-field">
+          <input type="text"
+                 id="name"
+                 name="name"
+                 ngModel
+                 #name="ngModel"
+                 required
+                 autofocus />
+          <label for="name">Name</label>
+        </div>
+        <div class="input-field">
+          <input type="text"
+                 id="sex"
+                 name="sex"
+                 ngModel
+                 #sex="ngModel" />
+          <label for="sex">Sex</label>
+        </div>
+        <div class="input-field">
+          <input type="text"
+                 id="age"
+                 name="age"
+                 ngModel
+                 #age="ngModel" />
+          <label for="age">Age</label>
+        </div>
+      </div>
+      <a class="waves-effect waves-light btn brown darken-4" (click)="SaveGeneral(name.value, sex.value, age.value)">Continue</a>
+    </div>
+    <!-- STEP 1: TEMPLATE -->
+    <div *ngIf="currentStep==1" class="character-create-section card-panel characters-card">
+      <h5 class="card-title">Step 1: Choose Template</h5>
+      <div class="card-content">
+        <div class="template-wrapper" fxLayout="row wrap" fxLayoutGap="3%">
+          <div class="card small brown" *ngFor="let template of rules.a.templates" fxFlex="30%" fxFlex.lt-md="80%">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="http://petervertesi.com/images/{{template.name}}.jpg">
+            </div>
+            <div class="card-content">
+              <span class="card-title activator grey-text text-darken-4">{{_text.Capitalize(template.name)}}<i class="material-icons right">more_vert</i></span>
+              <p>
+                <a class="waves-effect waves-light btn brown darken-4" (click)="ChooseTemplate(template)">
+                  Choose
+                </a>
+              </p>
+            </div>
+            <div class="card-reveal brown lighten-1">
+              <span class="card-title grey-text text-darken-4">{{_text.Capitalize(template.name)}}<i class="material-icons right">close</i></span>
+              <p>{{template.desc}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- STEP 2: ATTRIBUTES -->
+    <div *ngIf="currentStep==2" class="character-create-section card-panel characters-card">
+      <h5 class="card-title">Step 2: Determine Attributes</h5>
+      <div class="card-content">ggg</div>
+      <a class="waves-effect waves-light btn brown darken-4" (click)="NextStep()">Continue</a>
+    </div>
+    <!-- STEP 3: SKILLS -->
+    <div *ngIf="currentStep==3" class="character-create-section card-panel characters-card">
+      <h5 class="card-title">Step 3: Choose Skills</h5>
+      <div class="card-content">ggg</div>
+      <a class="waves-effect waves-light btn brown darken-4" disabled (click)="NextStep()">Continue</a>
+    </div>
+  </div>
+</div>
+<p>{{character | json}}</p>
