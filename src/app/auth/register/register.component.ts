@@ -10,6 +10,7 @@ import { AuthService } from "../auth.service";
 export class RegisterComponent implements OnInit {
 
   isLoading: boolean = false;
+  errorMessage: string;
 
   constructor(public authService: AuthService) { }
 
@@ -19,6 +20,11 @@ export class RegisterComponent implements OnInit {
 
   onSignup(form: NgForm) {
     if (form.invalid) {
+      this.errorMessage = "Invalid value entered!";
+      return;
+    }
+    if (form.value.password != form.value.passwordConfirm) {
+      this.errorMessage = "The passwords must match!";
       return;
     }
     this.isLoading = true;

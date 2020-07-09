@@ -8,7 +8,9 @@ import { AuthService } from "../auth.service";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
+
   isLoading: boolean = false;
+  errorMessage: string;
 
   constructor(public authService: AuthService) { }
 
@@ -18,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   onLogin(form: NgForm) {
     if (form.invalid) {
+      this.errorMessage = "Missing username or password.";
       return;
     }
     this.isLoading = true;

@@ -9,6 +9,11 @@
   margin-top: 20px;
 }
 
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
 /* Custom Colors */
 
 /* label color */

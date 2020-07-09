@@ -8,7 +8,7 @@
       <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
         <div class="login-form">
           <div class="input-field">
-            <input type="text" id="username" name="username" ngModel #usernameInput="ngModel" required autofocus/>
+            <input type="text" id="username" name="username" ngModel #usernameInput="ngModel" required autofocus />
             <label for="username">Username</label>
           </div>
           <div class="input-field">
@@ -19,6 +19,7 @@
             Submit
             <i class="material-icons right">send</i>
           </button>
+          <span class="error-message" *ngIf="errorMessage">  Error: {{errorMessage}}</span>
         </div>
       </form>
     </div>

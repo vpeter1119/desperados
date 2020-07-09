@@ -7,22 +7,74 @@
       <span class="card-title">Register</span>
       <form (submit)="onSignup(signupForm)" #signupForm="ngForm">
         <div class="register-form">
+          <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+            <!--Error messages for emailInput-->
+            <div *ngIf="emailInput.errors.required" class="error-message">Please enter an email address.</div>
+          </div>
           <div class="input-field">
-            <input type="email" id="email" name="email" ngModel #emailInput="ngModel" required />
+            <input
+                   type="email"
+                   id="email"
+                   name="email"
+                   ngModel
+                   #emailInput="ngModel"
+                   [ngModelOptions]="{ updateOn: 'blur' }"
+                   required />
             <label for="email">Email</label>
           </div>
-          <div class="input-field">
-            <input type="text" id="username" name="username" ngModel #usernameInput="ngModel" required />
-            <label for="username">Username</label>
+          <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+            <!--Error messages for usernameInput-->
+            <div *ngIf="usernameInput.errors.required" class="error-message">Please enter a username.</div>
+            <div *ngIf="usernameInput.errors.minlength" class="error-message">Username must be at least 5 characters long.</div>
           </div>
           <div class="input-field">
-            <input type="password" id="password" name="password" ngModel #passwordInput="ngModel" required />
+            <input type="text"
+                   id="username"
+                   name="username"
+                   ngModel
+                   #usernameInput="ngModel"
+                   [ngModelOptions]="{ updateOn: 'blur' }"
+                   minlength="5"
+                   required />
+            <label for="username">Username</label>
+          </div>
+          <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+            <!--Error messages for passwordInput-->
+            <div *ngIf="passwordInput.errors.required" class="error-message">Please enter a password.</div>
+            <div *ngIf="passwordInput.errors.minlength" class="error-message">Password must be at least 5 characters long.</div>
+          </div>
+          <div class="input-field">
+            <input type="password"
+                   id="password"
+                   name="password"
+                   ngModel
+                   #passwordInput="ngModel"
+                   [ngModelOptions]="{ updateOn: 'blur' }"
+                   minlength="5"
+                   required />
             <label for="password">Password</label>
+          </div>
+          <div *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched)">
+            <!--Error messages for passwordConfirm-->
+            <div *ngIf="passwordConfirm.errors.required" class="error-message">Please confirm your password.</div>
+            <div *ngIf="passwordConfirm.errors.minlength" class="error-message">Password must be at least 5 characters long.</div>
+          </div>
+          <div class="input-field">
+            <input type="password"
+                   id="passwordConfirm"
+                   name="passwordConfirm"
+                   ngModel
+                   #passwordConfirm="ngModel"
+                   [ngModelOptions]="{ updateOn: 'blur' }"
+                   minlength="5"
+                   required />
+            <label for="passwordConfirm">Confirm Password</label>
           </div>
           <button class="btn waves-effect waves-light brown darken-4" type="submit" name="action">
             Submit
             <i class="material-icons right">send</i>
           </button>
+          <span class="error-message" *ngIf="errorMessage">  Error: {{errorMessage}}</span>
         </div>
       </form>
     </div>
