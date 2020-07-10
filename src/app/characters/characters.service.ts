@@ -22,6 +22,26 @@ export class CharactersService {
     private authService: AuthService,
   ) { }
 
+  // Create a new character
+  CreateCharacter(characterData: Partial<Character>, HandleOutCome) {
+    let res: boolean;
+    this.currentUser = this.authService.getCurrentUserRaw();
+    let id = this.currentUser.id;
+    const url = `${this.apiUrl}/users/${id}/characters`;
+    this.http.post<{ok: boolean, result: Character}>(url, characterData).subscribe(response => {
+      // Handle response
+      if (response.ok) {
+        this.router.navigate["my-characters"]; // TO DO: Redirect to character page using index
+        HandleOutCome(true);
+      } else {
+        // Handle error
+        res = false;
+        HandleOutCome(false);
+      }
+    });
+  }
+
+  // Get data for all characters of current user
   GetMyCharacters() {
     this.currentUser = this.authService.getCurrentUserRaw();
     let id = this.currentUser.id;
@@ -44,12 +64,12 @@ export class CharactersService {
         }
       });
   }
-
   GetMyCharactersListener() {
     this.GetMyCharacters();
     return this.charactersListener.asObservable();
   }
 
+  // Get data for the current user's character, specified by character index
   GetOneOfMyCharacters(index) {
     this.currentUser = this.authService.getCurrentUserRaw();
     let id = this.currentUser.id;
@@ -67,10 +87,14 @@ export class CharactersService {
         }
       });
   }
-
   GetOneOfMyCharactersListener(index) {
     this.GetOneOfMyCharacters(index);
     return this.requestedCharacterListener.asObservable();
+  }
+
+  // Update character data with current values
+  SaveCharacterData(characterData) {
+    // Make a PUT request using the whole character data (updated with new values)
   }
 
 }

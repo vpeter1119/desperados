@@ -76,7 +76,60 @@
     <!-- STEP 2: ATTRIBUTES -->
     <div *ngIf="currentStep==2" class="character-create-section card-panel characters-card">
       <h5 class="card-title">Step 2: Determine Attributes</h5>
-      <div class="card-content">ggg</div>
+      <div class="card-content" fxLayout="row wrap">
+        <!-- SECTION: CALCULATED VALUES -->
+        <div class="card-panel character-sheet-section" fxFlex="100%">
+          <h5 class="card-title character-sheet-section-title"></h5>
+          <div class="card-content" fxLayout="row wrap" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
+            <div class="card-panel character-sheet-subsection" fxFlex="28%" fxFlex.lt-md="100%">
+              <span class="calculated-text character-sheet-subsection-title">Hit Points: </span>
+              <span class="calculated-value character-sheet-subsection-title">{{CalculateValues().hp}}</span>
+            </div>
+            <div class="card-panel character-sheet-subsection" fxFlex="30%" fxFlex.lt-md="100%">
+              <span class="calculated-text character-sheet-subsection-title">Dueling Score: </span>
+              <span class="calculated-value character-sheet-subsection-title">{{CalculateValues().ds}}</span>
+            </div>
+            <div class="card-panel character-sheet-subsection" fxFlex="38%" fxFlex.lt-md="100%">
+              <span class="calculated-text character-sheet-subsection-title">Strength of Nerve: </span>
+              <span class="calculated-value character-sheet-subsection-title">{{CalculateValues().son}}</span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <!-- SECTION: DETERMINE ATTRIBUTES -->
+        <div class="card-panel character-sheet-section" fxFlex="100%">
+          <p>Remaining points: {{attributePoints}} / {{attributePointsMax}}</p>
+          <table>
+            <tr *ngFor="let attr of rules.a.attributes">
+              <td title="{{rules.o.attributes[attr.name].desc}}">{{_text.Capitalize(attr.name)}}</td>
+              <td title="Substandard" (click)="SetAttribute(attr.name,1)">
+                <i class="fas fa-square" *ngIf="character.attributes[attr.name]>0"></i>
+                <i class="far fa-square" *ngIf="character.attributes[attr.name]<1"></i>
+              </td>
+              <td title="Average" (click)="SetAttribute(attr.name,2)">
+                <i class="fas fa-square" *ngIf="character.attributes[attr.name]>1"></i>
+                <i class="far fa-square" *ngIf="character.attributes[attr.name]<2"></i>
+              </td>
+              <td title="Talented" (click)="SetAttribute(attr.name,3)">
+                <i class="fas fa-square" *ngIf="character.attributes[attr.name]>2"></i>
+                <i class="far fa-square" *ngIf="character.attributes[attr.name]<3"></i>
+              </td>
+              <td title="Dab Hand" (click)="SetAttribute(attr.name,4)">
+                <i class="fas fa-square" *ngIf="character.attributes[attr.name]>3"></i>
+                <i class="far fa-square" *ngIf="character.attributes[attr.name]<4"></i>
+              </td>
+              <td title="Exceptional" (click)="SetAttribute(attr.name,5)">
+                <i class="fas fa-square" *ngIf="character.attributes[attr.name]>4"></i>
+                <i class="far fa-square" *ngIf="character.attributes[attr.name]<5"></i>
+              </td>
+              <td title="Legend" (click)="SetAttribute(attr.name,6)">
+                <i class="fas fa-square" *ngIf="character.attributes[attr.name]>5"></i>
+                <i class="far fa-square" *ngIf="character.attributes[attr.name]<6"></i>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
       <a class="waves-effect waves-light btn brown darken-4" (click)="NextStep()">Continue</a>
     </div>
     <!-- STEP 3: SKILLS -->

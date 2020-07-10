@@ -31,6 +31,30 @@
   background-color: #D9C2A7;
 }
 
+.character-sheet-section-title {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.character-sheet-section {
+  background-color: #D9C2A7;
+  color: #401F14;
+}
+
+.character-sheet-subsection {
+  background-color: #D9C2A7;
+  color: #401F14;
+}
+
+.character-sheet-subsection-title {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
 /* Custom Colors */
 
 /* label color */

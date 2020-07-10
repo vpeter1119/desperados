@@ -18,6 +18,9 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   rulesSub: Subscription;
   currentStep = 0;
   character: Partial<Character> = {};
+  attributeMinimums: any = {};
+  attributePoints = 20;
+  attributePointsMax = 20;
 
   constructor(
     private _common: CommonService,
@@ -49,11 +52,6 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
     this.currentStep++;
   }
 
-  ChooseTemplate(template) {
-    this.character.template = template;
-    this.NextStep();
-  }
-
   SaveGeneral(name: string, sex: string, age: string) {
     this.character = {
       name: name,
@@ -61,6 +59,58 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
       age: age || "unknown",
     };
     this.NextStep();
+  }
+
+  ChooseTemplate(template) {
+    this.character.template = template;
+    this.character.attributes = {};
+    this.rules.a.attributes.forEach(attr => {
+      this.character.attributes[attr.name] = 1;
+      this.attributeMinimums[attr.name] = 1;
+    });
+    template.mods.forEach(el => {
+      this.character.attributes[el.attribute] = el.value + 1;
+      this.attributeMinimums[el.attribute] = el.value + 1;
+    });
+    this.CalculateAttributePoints();
+    this.NextStep();
+  }
+
+  CreateCharacter() {
+    var characterData = {};
+    this.charactersService.CreateCharacter(characterData, (ok) => {
+      if (ok) {
+        // Handle success
+      } else {
+        // Handle error
+      }
+    });
+  }
+
+  SetAttribute(name, value) {
+    let a = value < this.attributeMinimums[name];
+    let b = (value-this.character.attributes[name]) > this.attributePoints;
+    if (a || b) return;
+    this.character.attributes[name] = value;
+    this.CalculateAttributePoints();
+  }
+
+  CalculateAttributePoints() {
+    let spent = 0;
+    this.rules.a.attributes.forEach(attr => {
+      spent += this.character.attributes[attr.name];
+    });
+    this.attributePoints = this.attributePointsMax - spent + 2;
+  }
+
+  CalculateValues() {
+    let attributes: any = this.character.attributes;
+    const calculatedValues = {
+      hp: parseInt(attributes.mettle),
+      ds: parseInt(attributes.agility) + 10,
+      son: parseInt(attributes.resolve)
+    }
+    return calculatedValues;
   }
 
   SaveToServer() {

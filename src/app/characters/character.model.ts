@@ -4,7 +4,7 @@ export interface Character {
   age: string;
   sex: string;
   template: {};
-  attributes: [];
+  attributes: {};
   skills: [];
   special: [];
   equipment: [];
