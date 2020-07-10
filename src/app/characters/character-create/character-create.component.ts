@@ -50,6 +50,7 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
 
   NextStep() {
     this.currentStep++;
+    if (this.currentStep == 3) this.AddSkillsFromTemplate();
   }
 
   SaveGeneral(name: string, sex: string, age: string) {
@@ -59,6 +60,14 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
       age: age || "unknown",
     };
     this.NextStep();
+  }
+
+  AddSkill(skill) {
+    this.character.skills.push(skill);
+  }
+
+  AddSkillsFromTemplate() {
+    this.character.skills = this.character.template.skills;
   }
 
   ChooseTemplate(template) {

@@ -3,9 +3,25 @@ export interface Character {
   name: string;
   age: string;
   sex: string;
-  template: {};
+  template: {
+    name: string,
+    desc: string,
+    mods: [
+      {
+        attribute: string,
+        value: number,
+      }
+    ],
+    skills: [
+      {name: string}
+    ],
+    specials: [],
+
+  };
   attributes: {};
-  skills: [];
+  skills: [
+    {name: string}
+  ];
   special: [];
   equipment: [];
 }

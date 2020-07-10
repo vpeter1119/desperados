@@ -135,7 +135,15 @@
     <!-- STEP 3: SKILLS -->
     <div *ngIf="currentStep==3" class="character-create-section card-panel characters-card">
       <h5 class="card-title">Step 3: Choose Skills</h5>
-      <div class="card-content">ggg</div>
+      <div class="card-content">
+        <div fxLayout="row wrap" fxLayoutGap="10%">
+          <!-- Owned Skills -->
+          <div fxFlex="45%">
+            <p *ngFor="let skill of character.skills">{{skill.name}}</p>
+          </div>
+          <!-- Unowned Skills -->
+        </div>
+      </div>
       <a class="waves-effect waves-light btn brown darken-4" disabled (click)="NextStep()">Continue</a>
     </div>
   </div>
