@@ -52,8 +52,8 @@
     <div *ngIf="currentStep==1" class="character-create-section card-panel characters-card">
       <h5 class="card-title">Step 1: Choose Template</h5>
       <div class="card-content">
-        <div class="template-wrapper" fxLayout="row wrap" fxLayoutGap="3%">
-          <div class="card small brown" *ngFor="let template of rules.a.templates" fxFlex="30%" fxFlex.lt-md="80%">
+        <div class="template-wrapper" fxLayout="row wrap" fxLayoutGap="3%" fxLayoutGap.lt-md="0">
+          <div class="card small brown" *ngFor="let template of rules.a.templates" fxFlex="30%" fxFlex.lt-md="100%">
             <div class="card-image waves-effect waves-block waves-light">
               <img class="activator" src="http://petervertesi.com/images/{{template.name}}.jpg">
             </div>
@@ -134,14 +134,24 @@
     </div>
     <!-- STEP 3: SKILLS -->
     <div *ngIf="currentStep==3" class="character-create-section card-panel characters-card">
-      <h5 class="card-title">Step 3: Choose Skills</h5>
+      <h5 class="card-title">Step 3: Choose Skills ({{pickedSkills}}/{{maxSkills}})</h5>
       <div class="card-content">
         <div fxLayout="row wrap" fxLayoutGap="10%">
           <!-- Owned Skills -->
           <div fxFlex="45%">
-            <p *ngFor="let skill of character.skills">{{skill.name}}</p>
+            <div *ngFor="let skill of defaultSkills" class="chargen-skill-container">
+              <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" disabled>{{skill.name}}</a>
+            </div>
+            <div *ngFor="let skill of character.skills" class="chargen-skill-container">
+              <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" (click)="RemoveSkill(skill)">{{skill.name}} <i class="material-icons chargen-skill-icon">keyboard_arrow_right</i></a>
+            </div>
           </div>
           <!-- Unowned Skills -->
+          <div fxFlex="45%">
+            <div *ngFor="let skill of availableSkills" class="chargen-skill-container">
+              <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" (click)="AddSkill(skill)"><i class="material-icons chargen-skill-icon">keyboard_arrow_left</i> {{skill.name}}</a>
+            </div>
+          </div>
         </div>
       </div>
       <a class="waves-effect waves-light btn brown darken-4" disabled (click)="NextStep()">Continue</a>

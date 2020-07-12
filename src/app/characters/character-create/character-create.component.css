@@ -20,6 +20,16 @@
   background-color: #D9C2A7;
 }
 
+.chargen-skill-container {
+    margin: 10px auto;
+    vertical-align: middle;
+}
+
+.chargen-skill-icon {
+    vertical-align: bottom;
+    font-size: 18px !important;
+}
+
 .section-title {
   font-family: 'Libre Baskerville', serif;
   font-weight: 400;

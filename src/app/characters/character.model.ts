@@ -6,22 +6,13 @@ export interface Character {
   template: {
     name: string,
     desc: string,
-    mods: [
-      {
-        attribute: string,
-        value: number,
-      }
-    ],
-    skills: [
-      {name: string}
-    ],
+    mods: { attribute: string, value: number }[],
+    skills: { name: string }[],
     specials: [],
 
   };
   attributes: {};
-  skills: [
-    {name: string}
-  ];
+  skills: { name: string }[];
   special: [];
   equipment: [];
 }

@@ -21,6 +21,10 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   attributeMinimums: any = {};
   attributePoints = 20;
   attributePointsMax = 20;
+  defaultSkills = [];
+  availableSkills = [];
+  maxSkills = 2;
+  pickedSkills = 0;
 
   constructor(
     private _common: CommonService,
@@ -50,7 +54,7 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
 
   NextStep() {
     this.currentStep++;
-    if (this.currentStep == 3) this.AddSkillsFromTemplate();
+    if (this.currentStep == 3) this.ListSkillsFromTemplate();
   }
 
   SaveGeneral(name: string, sex: string, age: string) {
@@ -63,11 +67,34 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   }
 
   AddSkill(skill) {
+    if (this.pickedSkills >= this.maxSkills) return;
     this.character.skills.push(skill);
+    this.RemoveFromArray(skill, this.availableSkills);
+    this.SortSkills(this.character.skills);
+    this.pickedSkills++;
+  }
+
+  RemoveSkill(skill) {
+    this.availableSkills.push(skill);
+    this.RemoveFromArray(skill, this.character.skills);
+    this.SortSkills(this.availableSkills);
+    this.pickedSkills--;
   }
 
   AddSkillsFromTemplate() {
     this.character.skills = this.character.template.skills;
+  }
+
+  // This lists the default skills but does not add them to the character
+  ListSkillsFromTemplate() {
+    this.character.skills = [];
+    this.defaultSkills = this.character.template.skills;
+    this.availableSkills = this.rules.a.skill.filter(skill => this.defaultSkills.map(function (e) { return e.name; }).indexOf(skill.name) < 0);
+    this.SortSkills(this.availableSkills);
+  }
+
+  SortSkills(array: {name: string}[]) {
+    array.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   ChooseTemplate(template) {
@@ -128,6 +155,14 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.rulesSub.unsubscribe();
+  }
+
+  //Generic method to remove element from array by 'name'
+  RemoveFromArray(element, array) {
+    var index = array.map(function (e) { return e.name; }).indexOf(element.name);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
   }
 
 }
