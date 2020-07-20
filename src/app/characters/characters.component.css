@@ -1,7 +1,11 @@
 /* Custom Classes */
 
 .characters-card {
-  background-color: #D9C2A7;  
+  background-color: #D9C2A7;
+}
+
+.characters-card:hover {
+  cursor: pointer;
 }
 
 .character-name {

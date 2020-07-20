@@ -15,6 +15,7 @@ export class CharactersService {
   charactersListener = new Subject<Character[]>();
   requestedCharacter;
   requestedCharacterListener = new Subject<Character>();
+  deletedCharacterListener = new Subject<string>();
 
   constructor(
     private http: HttpClient,
@@ -95,6 +96,27 @@ export class CharactersService {
   // Update character data with current values
   SaveCharacterData(characterData) {
     // Make a PUT request using the whole character data (updated with new values)
+  }
+
+  // Flags the specified character as deleted
+  DeleteOneOfMyCharacters(char) {
+    var index = char.index;
+    var checkIndex = prompt(`To confirm you want to delete this character, please type ${index} and press OK.`);
+    if (checkIndex != index) return;
+    this.currentUser = this.authService.getCurrentUserRaw();
+    let id = this.currentUser.id;
+    const url = `${this.apiUrl}/users/${id}/characters/${index}`;
+    this.http.delete(url).subscribe((result: {ok:boolean,message:string}) => {
+      if (result.ok) {
+        this.deletedCharacterListener.next(char);
+      } else {
+        this.deletedCharacterListener.next("error");
+      }
+    })
+  }
+  DeleteOneOfMyCharactersListener(char) {
+    this.DeleteOneOfMyCharacters(char);
+    return this.deletedCharacterListener.asObservable();
   }
 
 }

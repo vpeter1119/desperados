@@ -24,6 +24,7 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   attributePointsMax = 20;
   defaultSkills = [];
   availableSkills = [];
+  chosenSkillList: { name: string, desc: string }[] = [];
   maxSkills = 2;
   pickedSkills = 0;
   availableSpells = [];
@@ -55,6 +56,8 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
       })
   }
 
+  /* NAVIGATE STEPS */
+
   SetStep(nr: number) {
     this.currentStep = nr;
   }
@@ -62,11 +65,11 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   NextStep() {
     this.currentStep++;
     if (this.currentStep == 3) {
-      this.ListSkillsFromTemplate();
+      this.ListAvailableSkills();
       this.character.special = this.character.template.specials;
     };
     if (this.currentStep == 4) {
-      this.AddSkillsFromTemplate();
+      this.SaveSkills();
     };
     if (this.currentStep == 4 && this.character.template.name != "voodoo-priest") {
       this.CreateCharacter();
@@ -76,6 +79,8 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
       this.CreateCharacter();
     };
   }
+
+  /* GENERAL */
 
   SaveGeneral(name: string, sex: string, age: string) {
     if (!name) {
@@ -93,36 +98,51 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
     this.NextStep();
   }
 
+/* SKILLS */
+
+  ListAvailableSkills() {
+    this.availableSkills = this.rules.a.skill;
+    this.character.template.skills.forEach(skill => {
+      this.RemoveFromArray(skill, this.availableSkills);
+    });
+  }
+
   AddSkill(skill) {
     if (this.pickedSkills >= this.maxSkills) return;
-    this.character.skills.push(skill);
+    this.chosenSkillList.push(skill);
     this.RemoveFromArray(skill, this.availableSkills);
-    this.SortSkills(this.character.skills);
+    this.SortSkills(this.chosenSkillList);
     this.pickedSkills++;
+    console.warn(this.chosenSkillList);
   }
 
   RemoveSkill(skill) {
     this.availableSkills.push(skill);
-    this.RemoveFromArray(skill, this.character.skills);
+    this.RemoveFromArray(skill, this.chosenSkillList);
     this.SortSkills(this.availableSkills);
     this.pickedSkills--;
+    console.warn(this.chosenSkillList);
   }
 
   AddSkillsFromTemplate() {
+    this.character.skills = [];
     this.character.template.skills.forEach(skill => {
       let skillToAdd = this.rules.o.skills[skill.name];
       this.character.skills.push(skillToAdd);
-      this.SortSkills(this.character.skills);
-    })
+    });
+    this.SortSkills(this.character.skills);
   }
 
-  // This lists the default skills but does not add them to the character
-  ListSkillsFromTemplate() {
-    this.character.skills = [];
-    this.defaultSkills = this.character.template.skills;
-    this.availableSkills = this.rules.a.skill.filter(skill => this.defaultSkills.map(function (e) { return e.name; }).indexOf(skill.name) < 0);
-    this.SortSkills(this.availableSkills);
+  SaveSkills() {
+    this.character.skills = this.character.skills.concat(this.chosenSkillList);
+    this.SortSkills(this.character.skills);
   }
+
+  SortSkills(array: { name: string }[]) {
+    array.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+/* SPELLS */
 
   ListSpells() {
     this.character.special = this.character.template.specials;
@@ -149,9 +169,7 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
     this.character.special.concat(this.chosenSpellList);
   }
 
-  SortSkills(array: {name: string}[]) {
-    array.sort((a, b) => a.name.localeCompare(b.name));
-  }
+  /* TEMPLATE */
 
   ChooseTemplate(template) {
     this.character.template = template;
@@ -166,22 +184,11 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
     });
     this.CalculateAttributePoints();
     this.ListSpells();
+    this.AddSkillsFromTemplate();
     this.NextStep();
   }
 
-  CreateCharacter() {
-    var characterData = this.character;
-    this.charactersService.CreateCharacter(characterData, (ok) => {
-      if (ok) {
-        // Handle success
-        console.warn("Character successfully created.");
-        this.router.navigate(["my-characters"]);
-      } else {
-        // Handle error
-        console.warn("Could not create character");
-      }
-    });
-  }
+/* ATTRIBUTES */
 
   SetAttribute(name, value) {
     let a = value < this.attributeMinimums[name];
@@ -209,6 +216,22 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
     return calculatedValues;
   }
 
+  /* COMMUNICATE WITH SERVER */
+
+  CreateCharacter() {
+    var characterData = this.character;
+    this.charactersService.CreateCharacter(characterData, (ok) => {
+      if (ok) {
+        // Handle success
+        console.warn("Character successfully created.");
+        this.router.navigate(["my-characters"]);
+      } else {
+        // Handle error
+        console.warn("Could not create character");
+      }
+    });
+  }
+
   SaveToServer() {
     // Send current character data to the server
   }
@@ -216,6 +239,8 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.rulesSub.unsubscribe();
   }
+
+  /* MISC */
 
   //Generic method to remove element from array by 'name'
   RemoveFromArray(element, array) {

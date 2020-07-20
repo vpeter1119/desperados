@@ -169,10 +169,10 @@
           <!-- Owned Skills -->
           <div fxFlex="45%" fxFlex.lt-md="100%">
             <h5 class="card-title character-sheet-section-title">Owned Skills</h5>
-            <div *ngFor="let skill of defaultSkills" class="chargen-skill-container">
+            <div *ngFor="let skill of character.skills" class="chargen-skill-container">
               <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" disabled>{{skill.name}}</a>
             </div>
-            <div *ngFor="let skill of character.skills" class="chargen-skill-container">
+            <div *ngFor="let skill of chosenSkillList" class="chargen-skill-container">
               <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" (click)="RemoveSkill(skill)">{{skill.name}} <i class="material-icons chargen-skill-icon" fxHide.lt-md>keyboard_arrow_right</i></a>
             </div>
           </div>

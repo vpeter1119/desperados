@@ -7,19 +7,18 @@
     <div *ngIf="!characters">No characters.</div>
     <div *ngIf="characters" fxLayout="row wrap" fxLayoutGap="10px">
       <div fxFlex="45%" fxFlex.lt-md="100%" *ngFor="let character of characters">
-        <a href="" routerLink="{{character.index}}">
-          <div class="card brown hoverable">
-            <div class="card-image">
-              <img src="http://petervertesi.com/images/western-cover-2.jpg">
-              <span class="card-title character-name">{{character.name}}</span>
-            </div>
-            <div class="card-content white-text">
-              <p>Occupation: <span title="{{character.template.desc}}">{{character.template.name}}</span></p>
-              <p>Sex: {{character.sex}}</p>
-              <p>Age: {{character.age}}</p>
-            </div>
+        <div class="card brown hoverable">
+          <div class="card-image">
+            <img src="http://petervertesi.com/images/western-cover-2.jpg" (click)="ViewCharacter(character)">
+            <span class="card-title character-name" (click)="ViewCharacter(character)">{{character.name}}</span>
+            <a class="btn-floating halfway-fab waves-effect waves-light red" (click)="DeleteCharacter(character)"><i class="material-icons">delete</i></a>
           </div>
-        </a>
+          <div class="card-content white-text" (click)="ViewCharacter(character)">
+            <p>Occupation: <span title="{{character.template.desc}}">{{character.template.name}}</span></p>
+            <p>Sex: {{character.sex}}</p>
+            <p>Age: {{character.age}}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
