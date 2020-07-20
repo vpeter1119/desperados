@@ -11,6 +11,7 @@
             <a class="breadcrumb" *ngIf="currentStep>0" (click)="SetStep(1)">1. Template</a>
             <a class="breadcrumb" *ngIf="currentStep>1" (click)="SetStep(2)">2. Attributes</a>
             <a class="breadcrumb" *ngIf="currentStep>2" (click)="SetStep(3)">3. Skills</a>
+            <a class="breadcrumb" *ngIf="currentStep>3 && character.class=='voodoo-priest'" (click)="SetStep(4)">4. Spells</a>
           </div>
         </div>
       </nav>
@@ -19,6 +20,10 @@
     <div *ngIf="currentStep==0" class="character-create-section card-panel characters-card">
       <h5 class="card-title">Step 0: Name Your Character!</h5>
       <div class="card-content">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)">
+          <!--Error messages for emailInput-->
+          <div *ngIf="name.errors.required" class="error-message">Please enter a name for your character.</div>
+        </div>
         <div class="input-field">
           <input type="text"
                  id="name"
@@ -46,7 +51,8 @@
           <label for="age">Age</label>
         </div>
       </div>
-      <a class="waves-effect waves-light btn brown darken-4" (click)="SaveGeneral(name.value, sex.value, age.value)">Continue</a>
+      <a class="waves-effect waves-light btn brown darken-4" (click)="SaveGeneral(name.value, sex.value, age.value)" [disabled]="!name.touched">Continue</a>
+      <div *ngIf="errorMessage" class="error-message">  {{errorMessage}}</div>
     </div>
     <!-- STEP 1: TEMPLATE -->
     <div *ngIf="currentStep==1" class="character-create-section card-panel characters-card">
@@ -68,6 +74,14 @@
             <div class="card-reveal brown lighten-1">
               <span class="card-title grey-text text-darken-4">{{_text.Capitalize(template.name)}}<i class="material-icons right">close</i></span>
               <p>{{template.desc}}</p>
+              <p><strong>Attribute bonuses</strong>: +1 to {{_text.Capitalize(template.mods[0].attribute)}} and {{_text.Capitalize(template.mods[1].attribute)}}.</p>
+              <p><strong>Skills</strong>: {{_text.Capitalize(template.skills[0].name)}} and {{_text.Capitalize(template.skills[1].name)}}.</p>
+              <p><strong>Special skill<span *ngIf="template.specials.length > 1">s</span></strong>:<span *ngFor="let spec of template.specials" title="{{spec.desc}}"> {{spec.name}}</span></p>
+              <p>
+                <a class="waves-effect waves-light btn brown darken-4" (click)="ChooseTemplate(template)">
+                  Choose
+                </a>
+              </p>
             </div>
           </div>
         </div>
@@ -77,25 +91,6 @@
     <div *ngIf="currentStep==2" class="character-create-section card-panel characters-card">
       <h5 class="card-title">Step 2: Determine Attributes</h5>
       <div class="card-content" fxLayout="row wrap">
-        <!-- SECTION: CALCULATED VALUES -->
-        <div class="card-panel character-sheet-section" fxFlex="100%">
-          <h5 class="card-title character-sheet-section-title"></h5>
-          <div class="card-content" fxLayout="row wrap" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
-            <div class="card-panel character-sheet-subsection" fxFlex="28%" fxFlex.lt-md="100%">
-              <span class="calculated-text character-sheet-subsection-title">Hit Points: </span>
-              <span class="calculated-value character-sheet-subsection-title">{{CalculateValues().hp}}</span>
-            </div>
-            <div class="card-panel character-sheet-subsection" fxFlex="30%" fxFlex.lt-md="100%">
-              <span class="calculated-text character-sheet-subsection-title">Dueling Score: </span>
-              <span class="calculated-value character-sheet-subsection-title">{{CalculateValues().ds}}</span>
-            </div>
-            <div class="card-panel character-sheet-subsection" fxFlex="38%" fxFlex.lt-md="100%">
-              <span class="calculated-text character-sheet-subsection-title">Strength of Nerve: </span>
-              <span class="calculated-value character-sheet-subsection-title">{{CalculateValues().son}}</span>
-            </div>
-          </div>
-        </div>
-        <br />
         <!-- SECTION: DETERMINE ATTRIBUTES -->
         <div class="card-panel character-sheet-section" fxFlex="100%">
           <p>Remaining points: {{attributePoints}} / {{attributePointsMax}}</p>
@@ -129,6 +124,25 @@
             </tr>
           </table>
         </div>
+        <br />
+        <!-- SECTION: CALCULATED VALUES -->
+        <div class="card-panel character-sheet-section" fxFlex="100%">
+          <h5 class="card-title character-sheet-section-title"></h5>
+          <div class="card-content" fxLayout="row wrap" fxLayoutGap="2%" fxLayoutGap.lt-md="0">
+            <div class="card-panel character-sheet-subsection" fxFlex="28%" fxFlex.lt-md="100%">
+              <span class="calculated-text character-sheet-subsection-title">Hit Points: </span>
+              <span class="calculated-value character-sheet-subsection-title">{{CalculateValues().hp}}</span>
+            </div>
+            <div class="card-panel character-sheet-subsection" fxFlex="30%" fxFlex.lt-md="100%">
+              <span class="calculated-text character-sheet-subsection-title">Dueling Score: </span>
+              <span class="calculated-value character-sheet-subsection-title">{{CalculateValues().ds}}</span>
+            </div>
+            <div class="card-panel character-sheet-subsection" fxFlex="38%" fxFlex.lt-md="100%">
+              <span class="calculated-text character-sheet-subsection-title">Strength of Nerve: </span>
+              <span class="calculated-value character-sheet-subsection-title">{{CalculateValues().son}}</span>
+            </div>
+          </div>
+        </div>
       </div>
       <a class="waves-effect waves-light btn brown darken-4" (click)="NextStep()">Continue</a>
     </div>
@@ -138,20 +152,35 @@
       <div class="card-content">
         <div fxLayout="row wrap" fxLayoutGap="10%">
           <!-- Owned Skills -->
-          <div fxFlex="45%">
+          <div fxFlex="45%" fxFlex.lt-md="100%">
+            <h5 class="card-title character-sheet-section-title">Owned Skills</h5>
             <div *ngFor="let skill of defaultSkills" class="chargen-skill-container">
               <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" disabled>{{skill.name}}</a>
             </div>
             <div *ngFor="let skill of character.skills" class="chargen-skill-container">
-              <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" (click)="RemoveSkill(skill)">{{skill.name}} <i class="material-icons chargen-skill-icon">keyboard_arrow_right</i></a>
+              <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" (click)="RemoveSkill(skill)">{{skill.name}} <i class="material-icons chargen-skill-icon" fxHide.lt-md>keyboard_arrow_right</i></a>
             </div>
           </div>
           <!-- Unowned Skills -->
-          <div fxFlex="45%">
+          <div *ngIf="pickedSkills < maxSkills" fxFlex="45%" fxFlex.lt-md="100%">
+            <h5 class="card-title character-sheet-section-title">Available Skills</h5>
             <div *ngFor="let skill of availableSkills" class="chargen-skill-container">
-              <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" (click)="AddSkill(skill)"><i class="material-icons chargen-skill-icon">keyboard_arrow_left</i> {{skill.name}}</a>
+              <a class="waves-effect waves-light btn brown" title="{{skill.desc}}" (click)="AddSkill(skill)"><i class="material-icons chargen-skill-icon" fxHide.lt-md>keyboard_arrow_left</i> {{skill.name}}</a>
             </div>
           </div>
+        </div>
+      </div>
+      <a class="waves-effect waves-light btn brown darken-4" (click)="NextStep()">Continue</a>
+    </div>
+    <!-- STEP 4 (optional): SPELLS -->
+    <div *ngIf="currentStep==4 && character.template=='voodoo-priest'" class="character-create-section card-panel characters-card">
+      <h5 class="card-title">Step 4: Choose Spells ({{pickedSpells}}/{{maxSpells}})</h5>
+      <div class="card-content">
+        <div fxLayout="row wrap" fxLayoutGap="10%">
+          <!-- Owned Spells -->
+          
+          <!-- Unowned Spells -->
+          
         </div>
       </div>
       <a class="waves-effect waves-light btn brown darken-4" disabled (click)="NextStep()">Continue</a>

@@ -30,6 +30,11 @@
     font-size: 18px !important;
 }
 
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
 .section-title {
   font-family: 'Libre Baskerville', serif;
   font-weight: 400;

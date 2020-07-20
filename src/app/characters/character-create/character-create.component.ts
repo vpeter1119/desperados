@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs'; 7
+import { Router } from "@angular/router";
 
 import { CommonService } from '../../common/common.service';
 import { TextService } from '../../common/text.service';
@@ -25,11 +26,13 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   availableSkills = [];
   maxSkills = 2;
   pickedSkills = 0;
+  errorMessage: string;
 
   constructor(
     private _common: CommonService,
     public _text: TextService,
     private charactersService: CharactersService,
+    public router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -54,10 +57,21 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
 
   NextStep() {
     this.currentStep++;
-    if (this.currentStep == 3) this.ListSkillsFromTemplate();
+    if (this.currentStep == 3) {
+      this.ListSkillsFromTemplate();
+      this.character.special = this.character.template.specials;
+    };
+    if (this.currentStep == 4) this.AddSkillsFromTemplate();
+    if (this.currentStep == 4 && this.character.template.name != "voodoo-priest") {
+      this.CreateCharacter()
+    };
   }
 
   SaveGeneral(name: string, sex: string, age: string) {
+    if (!name) {
+      this.errorMessage = "Please enter a name for your character!";
+      return;
+    }
     this.character = {
       name: name,
       sex: sex || "unknown",
@@ -82,7 +96,11 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   }
 
   AddSkillsFromTemplate() {
-    this.character.skills = this.character.template.skills;
+    this.character.template.skills.forEach(skill => {
+      let skillToAdd = this.rules.o.skills[skill.name];
+      this.character.skills.push(skillToAdd);
+      this.SortSkills(this.character.skills);
+    })
   }
 
   // This lists the default skills but does not add them to the character
@@ -113,12 +131,15 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   }
 
   CreateCharacter() {
-    var characterData = {};
+    var characterData = this.character;
     this.charactersService.CreateCharacter(characterData, (ok) => {
       if (ok) {
         // Handle success
+        console.warn("Character successfully created.");
+        this.router.navigate(["my-characters"]);
       } else {
         // Handle error
+        console.warn("Could not create character");
       }
     });
   }

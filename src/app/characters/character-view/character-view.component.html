@@ -18,89 +18,36 @@
         <div class="card-panel character-sheet-section" fxFlex="100%">
           <h5 class="card-title character-sheet-section-title">Attributes</h5>
           <div class="card-content" fxLayout="row wrap" fxLayoutGap="10%" fxLayoutGap.lt-md="0">
+            <!-- PHYSICAL -->
             <div class="card-panel character-sheet-subsection" fxFlex="45%" fxFlex.lt-md="100%">
               <h6 class="card-title character-sheet-subsection-title">Physical</h6>
               <div class="card-content">
                 <table fxShow fxHide.lt-md>
-                  <tr>
-                    <td>Brawn</td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.brawn>0"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.brawn<1"></i>
+                  <tr *ngFor="let attr of physical">
+                    <td title="{{rules.o.attributes[attr.name].desc}}">{{_text.Capitalize(attr.name)}}</td>
+                    <td title="Substandard">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>0"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<1"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.brawn>1"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.brawn<2"></i>
+                    <td title="Average">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>1"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<2"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.brawn>2"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.brawn<3"></i>
+                    <td title="Talented">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>2"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<3"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.brawn>3"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.brawn<4"></i>
+                    <td title="Dab Hand">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>3"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<4"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.brawn>4"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.brawn<5"></i>
+                    <td title="Exceptional">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>4"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<5"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.brawn>5"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.brawn<6"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Agility</td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.agility>0"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.agility<1"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.agility>1"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.agility<2"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.agility>2"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.agility<3"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.agility>3"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.agility<4"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.agility>4"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.agility<5"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.agility>5"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.agility<6"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Mettle</td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.mettle>0"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.mettle<1"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.mettle>1"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.mettle<2"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.mettle>2"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.mettle<3"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.mettle>3"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.mettle<4"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.mettle>4"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.mettle<5"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.mettle>5"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.mettle<6"></i>
+                    <td title="Legend">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>5"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<6"></i>
                     </td>
                   </tr>
                 </table>
@@ -120,89 +67,36 @@
                 </table>
               </div>
             </div>
+            <!-- PHYSICAL -->
             <div class="card-panel character-sheet-subsection" fxFlex="45%" fxFlex.lt-md="100%">
               <h6 class="card-title character-sheet-subsection-title">Mental</h6>
               <div class="card-content">
                 <table fxShow fxHide.lt-md>
-                  <tr>
-                    <td>Insight</td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.insight>0"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.insight<1"></i>
+                  <tr *ngFor="let attr of mental">
+                    <td title="{{rules.o.attributes[attr.name].desc}}">{{_text.Capitalize(attr.name)}}</td>
+                    <td title="Substandard">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>0"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<1"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.insight>1"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.insight<2"></i>
+                    <td title="Average">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>1"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<2"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.insight>2"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.insight<3"></i>
+                    <td title="Talented">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>2"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<3"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.insight>3"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.insight<4"></i>
+                    <td title="Dab Hand">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>3"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<4"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.insight>4"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.insight<5"></i>
+                    <td title="Exceptional">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>4"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<5"></i>
                     </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.insight>5"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.insight<6"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Wits</td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.wits>0"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.wits<1"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.wits>1"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.wits<2"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.wits>2"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.wits<3"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.wits>3"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.wits<4"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.wits>4"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.wits<5"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.wits>5"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.wits<6"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Resolve</td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.resolve>0"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.resolve<1"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.resolve>1"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.resolve<2"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.resolve>2"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.resolve<3"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.resolve>3"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.resolve<4"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.resolve>4"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.resolve<5"></i>
-                    </td>
-                    <td>
-                      <i class="fas fa-square" *ngIf="character.attributes.resolve>5"></i>
-                      <i class="far fa-square" *ngIf="character.attributes.resolve<6"></i>
+                    <td title="Legend">
+                      <i class="fas fa-square" *ngIf="character.attributes[attr.name]>5"></i>
+                      <i class="far fa-square" *ngIf="character.attributes[attr.name]<6"></i>
                     </td>
                   </tr>
                 </table>
@@ -247,7 +141,7 @@
           <h5 class="card-title character-sheet-section-title">Skills</h5>
           <div class="card-content" fxLayout="row wrap" fxLayoutGap="10px">
             <table>
-              <thead>
+              <thead fxHide.lt-md>
                 <tr fxLayout="row">
                   <th fxFlex="30%">Skill</th>
                   <th fxFlex="70%">Description</th>
@@ -255,8 +149,8 @@
               </thead>
               <tbody>
                 <tr *ngFor="let skill of character.skills" fxLayout="row">
-                  <td fxFlex="30%">{{skill.name}}</td>
-                  <td fxFlex="70%">{{skill.description}}</td>
+                  <td fxFlex="30%">{{_text.Capitalize(skill.name)}}</td>
+                  <td fxFlex="70%">{{skill.desc}}</td>
                 </tr>
               </tbody>
             </table>
@@ -267,9 +161,9 @@
           <h5 class="card-title character-sheet-section-title">Special Skills and Voodoo Spells</h5>
           <div class="card-content" fxLayout="row wrap" fxLayoutGap="10px">
             <table>
-              <thead>
+              <thead fxHide.lt-md>
                 <tr fxLayout="row">
-                  <th fxFlex="30%">Special Skill</th>
+                  <th fxFlex="30%">Skill/Spell</th>
                   <th fxFlex="70%">Description</th>
                 </tr>
               </thead>
@@ -287,7 +181,7 @@
           <h5 class="card-title character-sheet-section-title">Equipment</h5>
           <div class="card-content" fxLayout="row wrap" fxLayoutGap="10px">
             <table>
-              <thead>
+              <thead fxHide.lt-md>
                 <tr fxLayout="row">
                   <th fxFlex="30%">Equipment</th>
                   <th fxFlex="70%">Description</th>
