@@ -40,7 +40,7 @@
                  name="sex"
                  ngModel
                  #sex="ngModel" />
-          <label for="sex">Sex</label>
+          <label for="sex">Sex (optional)</label>
         </div>
         <div class="input-field">
           <input type="text"
@@ -48,7 +48,7 @@
                  name="age"
                  ngModel
                  #age="ngModel" />
-          <label for="age">Age</label>
+          <label for="age">Age (optional)</label>
         </div>
       </div>
       <a class="waves-effect waves-light btn brown darken-4" (click)="SaveGeneral(name.value, sex.value, age.value)" [disabled]="!name.touched">Continue</a>
