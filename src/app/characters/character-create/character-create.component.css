@@ -70,6 +70,15 @@
   text-align: center;
 }
 
+.spell-card {
+  background-color: #D9C2A7;
+  color: #401F14;
+}
+
+.spell-card-title {
+  color: #401F14;
+}
+
 /* Custom Colors */
 
 /* label color */

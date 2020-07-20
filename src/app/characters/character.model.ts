@@ -13,6 +13,6 @@ export interface Character {
   };
   attributes: {};
   skills: { name: string }[];
-  special: [];
+  special: { name: string, desc: string }[];
   equipment: [];
 }

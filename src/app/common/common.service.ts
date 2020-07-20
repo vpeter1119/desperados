@@ -22,7 +22,8 @@ export class CommonService {
       result: {
         attributes: [],
         templates: [],
-        skill: []
+        skill: [],
+        spells: [],
       }
     }>(url)
       .subscribe(response => {
@@ -49,6 +50,7 @@ export class CommonService {
     let attributes = {};
     let templates = {};
     let skills = {};
+    let spells = {};
     obj.attributes.forEach(el => {
       attributes[el.name] = el;
     });
@@ -58,10 +60,14 @@ export class CommonService {
     obj.skill.forEach(el => {
       skills[el.name] = el;
     });
+    obj.spells.forEach(el => {
+      spells[el.name] = el;
+    });
     const mappedData = {
       attributes: attributes,
       templates: templates,
       skills: skills,
+      spells: spells,
     };
     return mappedData;
   }

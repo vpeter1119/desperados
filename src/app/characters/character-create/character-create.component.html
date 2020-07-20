@@ -11,7 +11,7 @@
             <a class="breadcrumb" *ngIf="currentStep>0" (click)="SetStep(1)">1. Template</a>
             <a class="breadcrumb" *ngIf="currentStep>1" (click)="SetStep(2)">2. Attributes</a>
             <a class="breadcrumb" *ngIf="currentStep>2" (click)="SetStep(3)">3. Skills</a>
-            <a class="breadcrumb" *ngIf="currentStep>3 && character.class=='voodoo-priest'" (click)="SetStep(4)">4. Spells</a>
+            <a class="breadcrumb" *ngIf="currentStep>3 && character.template.name=='voodoo-priest'" (click)="SetStep(4)">4. Spells</a>
           </div>
         </div>
       </nav>
@@ -21,8 +21,9 @@
       <h5 class="card-title">Step 0: Name Your Character!</h5>
       <div class="card-content">
         <div *ngIf="name.invalid && (name.dirty || name.touched)">
-          <!--Error messages for emailInput-->
+          <!--Error messages for name-->
           <div *ngIf="name.errors.required" class="error-message">Please enter a name for your character.</div>
+          <div *ngIf="name.errors.maxlength" class="error-message">This name is too long. Only 30 characters allowed for this field.</div>
         </div>
         <div class="input-field">
           <input type="text"
@@ -30,24 +31,38 @@
                  name="name"
                  ngModel
                  #name="ngModel"
+                 [ngModelOptions]="{ updateOn: 'blur' }"
+                 maxlength="30"
                  required
                  autofocus />
-          <label for="name">Name</label>
+          <label for="name">Name (required)</label>
+        </div>
+        <div *ngIf="sex.invalid && (sex.dirty || sex.touched)">
+          <!--Error messages for sex-->
+          <div *ngIf="sex.errors.maxlength" class="error-message">Only 15 characters allowed for this field.</div>
         </div>
         <div class="input-field">
           <input type="text"
                  id="sex"
                  name="sex"
                  ngModel
-                 #sex="ngModel" />
+                 #sex="ngModel"
+                 [ngModelOptions]="{ updateOn: 'blur' }"
+                 maxlength="15" />
           <label for="sex">Sex (optional)</label>
+        </div>
+        <div *ngIf="age.invalid && (age.dirty || age.touched)">
+          <!--Error messages for age-->
+          <div *ngIf="age.errors.maxlength" class="error-message">Only 15 characters allowed for this field.</div>
         </div>
         <div class="input-field">
           <input type="text"
                  id="age"
                  name="age"
                  ngModel
-                 #age="ngModel" />
+                 #age="ngModel"
+                 [ngModelOptions]="{ updateOn: 'blur' }"
+                 maxlength="15" />
           <label for="age">Age (optional)</label>
         </div>
       </div>
@@ -173,17 +188,46 @@
       <a class="waves-effect waves-light btn brown darken-4" (click)="NextStep()">Continue</a>
     </div>
     <!-- STEP 4 (optional): SPELLS -->
-    <div *ngIf="currentStep==4 && character.template=='voodoo-priest'" class="character-create-section card-panel characters-card">
+    <div *ngIf="currentStep==4 && character.template.name=='voodoo-priest'" class="character-create-section card-panel characters-card">
       <h5 class="card-title">Step 4: Choose Spells ({{pickedSpells}}/{{maxSpells}})</h5>
       <div class="card-content">
         <div fxLayout="row wrap" fxLayoutGap="10%">
           <!-- Owned Spells -->
-          
+          <div fxFlex="100%" fxFlex.lt-md="100%">
+            <h5 class="card-title character-sheet-section-title">Known Spells</h5>
+            <div *ngIf="chosenSpellList.length">
+              <div *ngFor="let spell of chosenSpellList" class="chargen-skill-container">
+                <a class="waves-effect waves-light btn brown" title="{{spell.desc}}" (click)="RemoveSpell(spell)">{{spell.name}} <i class="material-icons right chargen-skill-icon" fxHide.lt-md>close</i></a>
+              </div>
+            </div>
+            <div *ngIf="!chosenSpellList.length">No spells.</div>
+          </div>
+
           <!-- Unowned Spells -->
-          
+          <div *ngIf="pickedSpells < maxSpells" fxFlex="100%" fxFlex.lt-md="100%">
+            <h5 class="card-title character-sheet-section-title">Available Spells</h5>
+            <div fxLayout="row wrap">
+              <div *ngFor="let spell of availableSpells" class="chargen-skill-container" fxFlex="45%" fxFlex.lt-md="100%">
+                <div class="card spell-card" title="{{spell.desc}}">
+                  <div class="card-content">
+                    <span class="card-title activator spell-card-title">{{spell.name}}<i class="material-icons right">info_outline</i></span>
+                    <p><a class="waves-effect waves-light btn brown" (click)="AddSpell(spell)">Choose</a></p>
+                  </div>
+                  <div class="card-reveal spell-card">
+                    <span class="card-title spell-card-title">{{spell.name}}<i class="material-icons right">close</i></span>
+                    <p>{{spell.desc}}</p>
+                    <p><strong>Test</strong>: {{spell.test}}</p>
+                    <p><strong>Costs</strong>: {{spell.costs}}</p>
+                    <p><a class="waves-effect waves-light btn brown" (click)="AddSpell(spell)">Choose</a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <a class="waves-effect waves-light btn brown darken-4" disabled (click)="NextStep()">Continue</a>
+      <a class="waves-effect waves-light btn brown darken-4" (click)="NextStep()">Continue</a>
     </div>
   </div>
 </div>

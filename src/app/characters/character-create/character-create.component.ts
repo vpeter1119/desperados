@@ -26,6 +26,10 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
   availableSkills = [];
   maxSkills = 2;
   pickedSkills = 0;
+  availableSpells = [];
+  chosenSpellList: { name:string, desc:string }[] = [];
+  maxSpells = 2;
+  pickedSpells = 0;
   errorMessage: string;
 
   constructor(
@@ -61,15 +65,24 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
       this.ListSkillsFromTemplate();
       this.character.special = this.character.template.specials;
     };
-    if (this.currentStep == 4) this.AddSkillsFromTemplate();
+    if (this.currentStep == 4) {
+      this.AddSkillsFromTemplate();
+    };
     if (this.currentStep == 4 && this.character.template.name != "voodoo-priest") {
-      this.CreateCharacter()
+      this.CreateCharacter();
+    };
+    if (this.currentStep == 5) {
+      this.SaveSpells();
+      this.CreateCharacter();
     };
   }
 
   SaveGeneral(name: string, sex: string, age: string) {
     if (!name) {
       this.errorMessage = "Please enter a name for your character!";
+      return;
+    } else if (name.length > 30 || sex.length > 15 || age.length > 15) {
+      this.errorMessage = "Maximum characters exceeded. Please shorten to continue.";
       return;
     }
     this.character = {
@@ -111,6 +124,31 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
     this.SortSkills(this.availableSkills);
   }
 
+  ListSpells() {
+    this.character.special = this.character.template.specials;
+    this.availableSpells = this.rules.a.spells;
+  }
+
+  AddSpell(spell) {
+    if (this.pickedSpells >= this.maxSpells) return;
+    this.chosenSpellList.push(spell);
+    this.character.special.push(spell);
+    this.RemoveFromArray(spell, this.availableSpells);
+    this.SortSkills(this.chosenSpellList);
+    this.pickedSpells++;
+  }
+
+  RemoveSpell(spell) {
+    this.availableSpells.push(spell);
+    this.RemoveFromArray(spell, this.chosenSpellList);
+    this.SortSkills(this.availableSpells);
+    this.pickedSpells--;
+  }
+
+  SaveSpells() {
+    this.character.special.concat(this.chosenSpellList);
+  }
+
   SortSkills(array: {name: string}[]) {
     array.sort((a, b) => a.name.localeCompare(b.name));
   }
@@ -127,6 +165,7 @@ export class CharacterCreateComponent implements OnInit, OnDestroy {
       this.attributeMinimums[el.attribute] = el.value + 1;
     });
     this.CalculateAttributePoints();
+    this.ListSpells();
     this.NextStep();
   }
 
