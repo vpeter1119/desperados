@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
+import { environment } from "../../environments/environment";
 
 import { AuthService } from '../auth/auth.service';
 import { Character } from './character.model';
@@ -9,7 +10,9 @@ import { Character } from './character.model';
 @Injectable({ providedIn: "root" })
 export class CharactersService {
 
-  apiUrl = "https://mcrpc-server-pr-14.herokuapp.com/api/desperados";
+  apiRoot = environment.apiRoot;
+  apiUrl = this.apiRoot + 'desperados';
+
   currentUser;
   characters;
   charactersListener = new Subject<Character[]>();

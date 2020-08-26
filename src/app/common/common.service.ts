@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
 
-  apiUrl = "https://mcrpc-server-pr-14.herokuapp.com/api/desperados";
+  apiRoot = environment.apiRoot;
+  apiUrl = this.apiRoot + 'desperados';
   content;
   contentListener = new Subject();
 
